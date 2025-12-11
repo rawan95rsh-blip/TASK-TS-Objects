@@ -1,5 +1,5 @@
 // don't change this interface
-interface Book {
+export interface Book {
   title: string;
   author: string | string[];
   publishedYear: number;
@@ -11,24 +11,26 @@ interface Book {
 /**
  * `createBook` function:
  * - Accepts four parameters:
- *   - `title` (string)
- *   - `author` (string)
- *   - `publishedYear` (number)
- *   - `genre` (string)
+ *    - `title` (string)
+ *    - `author` (string)
+ *    - `publishedYear` (number)
+ *    - `genre` (string)
  * - Returns a new `Book` object with these properties.
- * Example:
- *  createBook("JavaScript: The Definitive Guide", "David Flanagan", 2020, "Programming");
- *   // => { title: "JavaScript: The Definitive Guide", author: "David Flanagan", publishedYear: 2020, genre: "Programming" }
  */
-function createBook(
+export function createBook(
   title: string,
   author: string,
   publishedYear: number,
   genre: string
 ): Book {
-  // write your code here...
+  const book: Book = {
+    title: title,
+    author: author,
+    publishedYear: publishedYear,
+    genre: genre,
+  };
 
-  return {} as Book; // replace "{} as Book" with what you see is fit
+  return book;
 }
 
 // DO NOT CHANGE THE LINE OF CODE BELOW (you can use it for testing your code)
@@ -44,107 +46,63 @@ const book = createBook(
  * - Accepts a `book` parameter of type `Book`.
  * - Returns the book’s title with its publish year separated by a space.
  * - Access the book title using dot-notation and access the publish year using bracket-notation.
- * Example:
- *  printBookTitleAndYear(book);
- *   // => "Hitchhiker's Guide to The Galaxy 1965"
  */
-function printBookTitleAndYear(book: Book): string {
-  // write your code here...
-
-  return ""; // replace empty string with what you see is fit
+export function printBookTitleAndYear(book: Book): string {
+  return `${book.title} ${book["publishedYear"]}`;
 }
 
 /**
  * `addPageCount` function:
- * - Accepts:
- *   - A `book` parameter of type `Book`.
- *   - A `pageCount` parameter of type `number`.
- * - Returns the same `Book` object with a new `pageCount` property.
- * Example:
- *  addPageCount(book, 320);
- *   // => { title: "Hitchhiker's Guide to The Galaxy", author: "Douglas Adams", publishedYear: 1965, genre: "Sci-Fi", pageCount: 320 }
+ * - Accepts a `book` parameter of type `Book`.
+ * - Accepts a `pageCount` parameter of type `number`.
+ * - Adds the `pageCount` property to the book object (modifies the same object).
+ * - Returns the updated book.
  */
-function addPageCount(book: Book, pageCount: number): Book {
-  // write your code here...
-
+export function addPageCount(book: Book, pageCount: number): Book {
+  book.pageCount = pageCount;
   return book;
 }
 
 /**
  * `addISBN` function:
- * - Accepts:
- *   - A `book` parameter of type `Book`.
- *   - An `ISBN` parameter of type `string`.
- * - Returns the same `Book` object with a new `ISBN` property.
- * Example:
- *  addISBN(book, "978-3-16-148410-0");
- *   // => {
- *   //       title: "Hitchhiker's Guide to The Galaxy",
- *   //       author: "Douglas Adams",
- *   //       publishedYear: 1965,
- *   //       genre: "Sci-Fi",
- *   //       ISBN: "978-3-16-148410-0" // ✅ added ISBN
- *   //    }
+ * - Accepts a `book` parameter of type `Book`.
+ * - Accepts an `isbn` parameter of type `string`.
+ * - Adds the `ISBN` property to the book object (modifies the same object).
+ * - Returns the updated book.
  */
-function addISBN(book: Book, ISBN: string): Book {
-  // write your code here...
-
+export function addISBN(book: Book, isbn: string): Book {
+  book.ISBN = isbn;
   return book;
 }
 
 /**
  * `updatePublishedYear` function:
- * - Accepts:
- *   - A `book` parameter of type `Book`.
- *   - A `newYear` parameter of type `number` representing the updated publish year.
- * - Returns the same `Book` object with an updated `publishedYear` property.
- * Example:
- *  updatePublishedYear(book, 2022);
- *    // => {
- *   //       title: "Hitchhiker's Guide to The Galaxy",
- *   //       author: "Douglas Adams",
- *   //       publishedYear: 2022, // ✅ updated publishedYear
- *   //       genre: "Sci-Fi",
- *   //       ISBN: "978-3-16-148410-0"
- *   //    }
+ * - Accepts a `book` parameter of type `Book`.
+ * - Accepts a `newYear` parameter of type `number`.
+ * - Updates the `publishedYear` property on the same book object.
+ * - Returns the updated book.
  */
-function updatePublishedYear(book: Book, newYear: number): Book {
-  // write your code here...
-
+export function updatePublishedYear(book: Book, newYear: number): Book {
+  book.publishedYear = newYear;
   return book;
 }
 
 /**
  * `addSecondAuthor` function:
- * - Accepts:
- *   - A `book` parameter of type `Book`.
- *   - An `additionalAuthor` parameter of type `string`.
- * - Updates the `author` property:
- *   - If `author` is already an array, it adds the new author.
- *   - If `author` is a string, it converts it to an array and adds the new author.
- * - Returns the updated `Book` object.
- * Example:
- *  addSecondAuthor(book, "John Doe");
- *   // => {
- *   //       title: "Hitchhiker's Guide to The Galaxy",
- *   //       author: ["Douglas Adams", "John Doe"], // ✅ two authors now
- *   //       publishedYear: 1965,
- *   //       genre: "Sci-Fi",
- *   //       ISBN: "978-3-16-148410-0"
- *   //    }
+ * - Accepts a `book` parameter of type `Book`.
+ * - Accepts an `additionalAuthor` parameter of type `string`.
+ * - Turns the `author` property into an array of two authors
+ *   OR adds to the existing array of authors.
  */
-function addSecondAuthor(book: Book, additionalAuthor: string): Book {
-  // write your code here...
+export function addSecondAuthor(
+  book: Book,
+  additionalAuthor: string
+): Book {
+  if (Array.isArray(book.author)) {
+    book.author = [...book.author, additionalAuthor];
+  } else {
+    book.author = [book.author, additionalAuthor];
+  }
 
   return book;
 }
-
-export {
-  createBook,
-  printBookTitleAndYear,
-  addPageCount,
-  addISBN,
-  updatePublishedYear,
-  addSecondAuthor,
-  Book,
-};
